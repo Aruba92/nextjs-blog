@@ -34,7 +34,7 @@ export async function getStaticPaths() {
       fallback: false,//if false, all path not returned by this function will return 404 page
     };
 }
-// Exporting this function will pre-render a page at build time using the props returned from the function.
+// Exporting this function will pre-render a page at build time using the props returned from the function (send a dry html to get hydrated later)
 // Params => get the params from the url props /post/[id] because this file is [id] too.
 // Return => props:PostData as params for Post Component.
 export async function getStaticProps({ params }) {
@@ -46,3 +46,13 @@ export async function getStaticProps({ params }) {
         },
     };
   }
+
+//Connection to DataBase
+export async function getStaticProps() {
+  const db = await myDB.connect({
+    host: process.env.DB_HOST,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+  })
+  // ...
+}
